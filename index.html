@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LG lugar de gente - Treinamento</title>
+
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://cdn1.lg.com.br/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn1.lg.com.br/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Biblioteca LG lugar de gente -->
+    <link rel="stylesheet" href="https://cdn1.lg.com.br/autoatendimento/1.0.0/css/lg.min.css">
+
+    <script>
+        var require = {
+            baseUrl: '/',
+            waitSeconds: 30,
+            paths: {
+                'cdn': 'https://cdn1.lg.com.br',
+                'text': 'https://cdn1.lg.com.br/require-text/2.0.15/js/text',
+                'config': 'https://cdn1.lg.com.br/requirejs-config/0.0.1/js/config',
+                'aaControls': 'https://cdn1.lg.com.br/autoatendimento/1.0.0/js/dist'
+            },
+            map: {
+                '*': {
+                    'jquery': 'aaControls/jquery/3.2.1',
+                    'bootstrap': 'bootstrap_v3.3.7',
+                    'css': 'cdn/require-css/0.1.10/js/css.min',
+                    'image': 'cdn/autoatendimento/1.0.0/js/requirejs/lg.aa.imageLoader'
+                }
+            },
+            config: {
+                'text': {
+                    useXhr: function(url, protocol, hostname, port) {
+                        return true;
+                    }
+                }
+            },
+            deps: ['jquery']
+        };
+    </script>
+    <script src="https://cdn1.lg.com.br/require/2.3.5/js/require.js"></script>
+</head>
+
+<body>
+    <div id="pnlFerias">
+        <div id="header"></div>
+        <div id="toolbar"></div>
+    </div>
+
+    <script>
+        require(['aaControls/lg.aa.config'], function(config) {
+            config.adicionar('workflow', './assets/scripts');
+
+            require(['jquery', 'workflow/lg.ferias.controller'], function($, FeriasController) {
+                new FeriasController($('#pnlFerias'));
+            }); 
+        });
+    </script>
+</body>
+
+</html>
