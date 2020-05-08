@@ -1,9 +1,9 @@
 define('workflow/lg.ferias.controller', [
-    'aaControls/jquery/3.2.1',
+    'jquery',
+    'aaControls/lg.aa.globalizacao',
     'aaControls/lg.aa.header',
     'aaControls/lg.aa.toolbar',
     'aaControls/lg.aa.selecaoColaborador',
-    'aaControls/lg.aa.globalizacao',
     'aaControls/lg.aa.validator',
     'aaControls/lg.aa.utils',
     'aaControls/lg.aa.block',
@@ -11,8 +11,9 @@ define('workflow/lg.ferias.controller', [
     'workflow/lg.mock',
     'aaControls/lg.aa.switch',
     'aaControls/lg.aa.datepicker'
-], function ($, Header, Toolbar, SelecaoDeColaborador, globalizacao, Validator, utils, block, messageBox, mock) {
+], function ($, globalizacao, Header, Toolbar, SelecaoColaborador, Validator, utils, block, messageBox, mock) {
 
+    // Adicionando a globalização 'Eu' para o componente de seleção de colaboradores
     globalizacao.adicione(29074, 'Eu');
 
     var Controller = function ($el) {
@@ -23,23 +24,29 @@ define('workflow/lg.ferias.controller', [
     Controller.prototype = {
 
         _inicializar: function () {
+            this.$elHeader = this.$el.find('#header');
+            this.$elToolbar = this.$el.find('#toolbar');
+
+            this._prepararComponentes();
+        },
+
+        _prepararComponentes: function () {
             var _this = this;
 
             mock.iniciarMocks();
 
-            this.header = new Header(this.$el.find('#header'), {
-                foto: 'http://img.olx.com.br/images/27/271806035773498.jpg',
+            this.headerController = new Header(this.$elHeader, {
                 nome: 'Thiago G. Gonzaga',
-                primeiraInformacao: 'Desenvolver na LG lugar de gente',
-                segundaInformacao: 'Gestor: <strong class="lg-aa-texto--primario">Farley Silva</strong>',
+                primeiraInformacao: 'Desenvolvedor na LG lugar de gente',
+                segundaInformacao: 'Gestor: <strong>Farley Silva</strong>',
                 email: 'thiago.gonzaga@lg.com.br',
-                telefone: '11 3333 3333 / 11 9999 9999',
+                telefone: '62 3333 3333 / 62 9999 9999',
                 facebook: 'https://www.facebook.com',
                 twitter: 'https://www.twitter.com',
                 linkedin: 'https://www.linkedin.com'
             });
 
-            this.toolbar = new Toolbar(this.$el.find('#toolbar'), {
+            this.toolbarController = new Toolbar(this.$elToolbar, {
                 descricao: 'Férias',
                 icone: 'lg-aa-icon--ferias',
                 botoes: [{
@@ -48,29 +55,24 @@ define('workflow/lg.ferias.controller', [
                 }]
             });
 
-            var selecaoColaborador = new SelecaoDeColaborador(this.$el.find('#selecaoColaborador'), {
-                $elementoReferencia: this.$el.find('#btnSelecaoColaborador'),
+            this.selecaoColaborador = new SelecaoColaborador($('#selecaoColaborador'), {
+                $elementoReferencia: $('#btnSelecaoColaborador'),
                 url: './colaboradores.json',
                 codigoEmpresa: 1,
                 matricula: 1,
-                onChange: function (dados) {
-                    if (dados.nomeCompleto) {
+                onChange: function(dados) {
+                    console.log(dados);
+                    if(dados.nomeCompleto) {
                         dados.nome = dados.nomeCompleto;
                     }
 
-                    dados.pequeno = false; // Esse atributo deixa o nome no Card do Header com a fonte maior
-                    dados.responsivo = true;
-                    _this.header.atualizarDados(dados);
+                    dados.pequeno = false;
+
+                    _this.headerController.atualizarDados(dados);
                 }
             });
 
-            this.$el.find('#switchFeriasParceladas').lgSwitch({ habilitado: false });
-            this.$el.find('#switchDecimoTerceiroSalario').lgSwitch();
-            this.$el.find('#switchAbonoPecuniario').lgSwitch({ toggle: true });
-
-            this.$el.find('.lg-aa-datepicker').lgDatepicker();
-
-            this.validator = new Validator(this.$el.find('#formFerias'), {
+            this.validator = new Validator($('#formFerias'), {
                 rules: {
                     dataInicio: {
                         required: true
@@ -89,21 +91,25 @@ define('workflow/lg.ferias.controller', [
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
-
+                    
                     block.bloquear(0);
-                    var objFormulario = utils.formToJson(form);
-
-                    $.post('ferias/salvar', objFormulario).done(function (data) {
+                    $.post('ferias/salvar', utils.formToJson(form)).done(function(data) {
                         _this.validator.verifiqueRespostaValidacao(data);
-
-                        if (!data.possuiInconsistencia && !data.possuiAlertas) {
-                            messageBox.sucesso('SUCESSO', 'Parabéns seu formulário não possui Inconsistências/Alertas.');
+                        
+                        if(!data.possuiInconsistencia && !data.possuiAlertas) {
+                            messageBox.sucesso('SUCESSO', 'Parabéns seus formulário não possui Inconsistências/Alertas.')
                         }
 
                         block.desbloquear();
                     });
                 }
             });
+
+            this.$el.find('.lg-aa-datepicker').lgDatepicker();
+
+            this.$el.find('#switchDecimoTerceiroSalario').lgSwitch();
+            this.$el.find('#switchAbonoPecuniario').lgSwitch({ toggle: true });
+            this.$el.find('#switchFeriasParceladas').lgSwitch({ habilitado: false });
 
             this.switchTipoLancamento = this.$el.find('#switchTipoLancamento').lgSwitch({
                 change: function (valor, $el) {

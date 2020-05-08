@@ -5,16 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>LG lugar de gente - Treinamento</title>
 
-    <!-- Boostrap CSS -->
-    <link rel="stylesheet" href="https://cdn1.lg.com.br/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdn1.lg.com.br/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Biblioteca LG lugar de gente -->
-    <link rel="stylesheet" href="https://cdn1.lg.com.br/autoatendimento/1.0.0/css/lg.min.css">
+    <title>Fluxo de Férias - LG lugar de gente</title>
 
     <script>
         var require = {
@@ -22,78 +14,111 @@
             waitSeconds: 30,
             paths: {
                 'cdn': 'https://cdn1.lg.com.br',
+                'css': 'https://cdn1.lg.com.br/require-css/0.1.10/js/css.min',
                 'text': 'https://cdn1.lg.com.br/require-text/2.0.15/js/text',
                 'config': 'https://cdn1.lg.com.br/requirejs-config/0.0.1/js/config',
-                'aaControls': 'https://cdn1.lg.com.br/autoatendimento/1.0.0/js/dist',
+                'aaControls': 'http://localhost/cdn/autoatendimento/1.0.0/js',
+                'bootstrap_v3.4.1': 'https://cdn1.lg.com.br/bootstrap/3.4.1/js/bootstrap.min',
+                'bootstrap_v3.3.7': 'https://cdn1.lg.com.br/bootstrap/3.4.1/js/bootstrap.min',
                 'jquery.validator': 'https://cdn1.lg.com.br/jquery-validation/1.17.0/js/jquery.validate.min',
-                'bootstrap_v3.3.7': 'https://cdn1.lg.com.br/bootstrap/3.3.7/js/bootstrap.min'
+                'jquery-mousewheel': 'https://cdn1.lg.com.br/jquery-mousewheel/3.1.13/js/jquery.mousewheel.min',
+                'moment': 'https://cdn1.lg.com.br/moment/2.18.1/js/moment-with-locales.min',
+                'knockout': 'https://cdn1.lg.com.br/knockout/3.5.0/js/knockout.min',
+                'knockout.mapping': 'https://cdn1.lg.com.br/knockout-mapping/2.4.1/js/knockout.mapping.min',
+                'aaTreinamento': 'scripts'
             },
             map: {
                 '*': {
-                    'jquery': 'aaControls/jquery/3.2.1',
-                    'bootstrap': 'bootstrap_v3.3.7',
-                    'css': 'cdn/require-css/0.1.10/js/css.min',
-                    'image': 'cdn/autoatendimento/1.0.0/js/requirejs/lg.aa.imageLoader'
+                    'jquery': 'aaControls/jquery/3.4.1',
+                    'bootstrap': 'bootstrap_v3.4.1',
+                    'image': 'aaControls/requirejs/lg.aa.imageLoader',
+                    'css': 'css'
                 }
             },
             shim: {
-                'bootstrap_v3.3.7': {
+                '*': {
+                    deps: ['jquery', 'css', 'image']
+                },
+                'bootstrap_v3.4.1': {
+                    deps: [
+                        'jquery'
+                    ]
+                },
+                'cdn/footable/2.0.3/js/footable.all.min': {
                     deps: ['jquery']
+                },
+                'cdn/summernote/0.8.9/js/summernote': {
+                    deps: ['jquery', 'bootstrap']
+                },
+                'signalr.core': {
+                    deps: ['aaControls/jquery/1.11.3']
+                },
+                'signalr.hubs': {
+                    deps: ['signalr.core']
                 }
             },
             config: {
                 'text': {
-                    useXhr: function(url, protocol, hostname, port) {
+                    useXhr: function (url, protocol, hostname, port) {
                         return true;
                     }
                 }
             },
-            deps: ['jquery', 'bootstrap_v3.3.7']
+            deps: ['jquery', 'bootstrap_v3.4.1']
         };
     </script>
+
+    <!-- Biblioteca LG lugar de gente -->
+    <link rel="stylesheet" href="https://cdn1.lg.com.br/autoatendimento/1.0.0/css/lg.build.min.css">
+
+    <!-- RequireJS -->
     <script src="https://cdn1.lg.com.br/require/2.3.5/js/require.js"></script>
 </head>
 
 <body>
     <div id="pnlFerias">
-        <div id="header"></div>
+        <!-- 1ª Parte -->
+        <div id="header">
+            <div class="lg-aa-container mb-3">
+                <div class="container p-4 text-center">
+                    <i class="lg-aa-texto--secundario fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                </div>
+            </div>
+        </div>
         <div id="toolbar"></div>
         <div id="selecaoColaborador"></div>
 
         <form id="formFerias" class="form-horizontal">
             <div class="container-fluid">
-                
+                <!-- 2ª Parte -->
                 <fieldset class="lg-aa-fieldset lg-aa-fieldset--primario">
                     <div class="container">
                         <legend>Informações</legend>
                     </div>
-                
+
                     <div class="row">
                         <div class="lg-aa-container lg-aa-container--fieldset">
                             <div class="container">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <label class="control-label lg-aa-label col-md-4">Período de aquisição</label>
-                                        <!-- Uso do form-control-static padrão do bootstrap corrigindo o alinhamento do texto estático 
-                                            Essa é uma forma de corrigir o alinhamento sem utilizar outros CSS -->
-                                        <div class="col-md-8 form-control-static">10/10/2011 a 09/10/2012 - 30 dias de direito</div>
+                                        <label class="lg-aa-label control-label col-sm-5 col-md-4">Período de aquisição</label>
+                                        <div class="col-sm-7 col-md-8">10/10/2011 a 09/10/2012 - 30 dias de direito</div>
                                     </div>
 
                                     <div class="row">
-                                        <label class="control-label lg-aa-label col-md-4">Faltas Justificadas</label>
-                                        <div class="col-md-8 form-control-static">0 dias</div>
+                                        <label class="lg-aa-label control-label col-sm-5 col-md-4">Faltas justificadas</label>
+                                        <div class="col-sm-7 col-md-8">0 dias</div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <label class="control-label lg-aa-label col-md-4">Período de fruição</label>
-                                        <div class="col-md-8 form-control-static">10/10/2012 a 09/10/2013</div>
+                                        <label class="lg-aa-label control-label col-sm-5 col-md-4">Período de fruição</label>
+                                        <div class="col-sm-7 col-md-8">10/10/2012 a 09/10/2013</div>
                                     </div>
 
                                     <div class="row">
-                                        <label class="control-label lg-aa-label col-md-4">Saldo de férias</label>
-                                        <div class="col-md-8 form-control-static">30 dias</div>
+                                        <label class="lg-aa-label control-label col-sm-5 col-md-4">Saldo de férias</label>
+                                        <div class="col-sm-7 col-md-8">30 dias</div>
                                     </div>
                                 </div>
                             </div>
@@ -101,24 +126,25 @@
                     </div>
                 </fieldset>
 
+                <!-- 3ª Parte -->
                 <fieldset class="lg-aa-fieldset lg-aa-fieldset--primario">
                     <div class="container">
                         <dl class="lg-aa-container__erro"></dl>
-                        <legend>Parcelamento de Férias</legend>
+                        <legend>Parcelamento de férias</legend>
                     </div>
-                
+
                     <div class="row">
                         <div class="lg-aa-container lg-aa-container--fieldset">
                             <div class="container">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <label class="control-label lg-aa-label col-md-4">Férias parceladas?</label>
-                                        <div class="col-md-8">
+                                        <label class="lg-aa-label control-label col-sm-5 col-md-4">Férias parceladas?</label>
+                                        <div class="col-sm-7 col-md-8">
                                             <div id="switchFeriasParceladas" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
-                                                <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
                                                     <input type="radio" name="feriasParceladas" value="true"> Sim
                                                 </label>
-                                                <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
                                                     <input type="radio" name="feriasParceladas" value="false" checked> Não
                                                 </label>
                                             </div>
@@ -136,10 +162,10 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="form-group lg-aa-obrigatorio">
-                                            <label for="txtDatepickerDataInicio" class="control-label lg-aa-label lg-aa-label--edicao col-md-4">Dada de início</label>
-                                            <div class="col-md-4">
+                                            <label for="dataInicio_Input" class="lg-aa-label control-label lg-aa-label--edicao col-sm-5 col-md-4">Data de início</label>
+                                            <div class="col-sm-5 col-md-4">
                                                 <div id="datepickerDataInicio" class="lg-aa-datepicker input-group date">
-                                                    <input id="txtDatepickerDataInicio" name="dataInicio" type="text" class="lg-aa-control form-control">
+                                                    <input id="dataInicio_Input" type="text" name="dataInicio" class="lg-aa-control form-control">
                                                     <div class="lg-aa-datepicker__icon input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </div>
@@ -150,19 +176,19 @@
 
                                     <div class="row">
                                         <div class="form-group lg-aa-obrigatorio">
-                                            <label for="diasGozo" class="control-label lg-aa-label lg-aa-label--edicao col-md-4">Dias de gozo</label>
-                                            <div class="col-md-4">
-                                                <input type="number" id="diasGozo" name="diasGozo" class="form-control lg-aa-control">
+                                            <label for="diasGozo" class="lg-aa-label control-label lg-aa-label--edicao col-sm-5 col-md-4">Dias de gozo</label>
+                                            <div class="col-sm-5 col-md-4">
+                                                <input id="diasGozo" type="number" name="diasGozo" class="form-control lg-aa-control">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label lg-aa-label col-md-4">Dada de fim</label>
-                                            <div class="col-md-4">
+                                            <label for="datepickerDataFim_Input" class="lg-aa-label control-label col-sm-5 col-md-4">Data fim</label>
+                                            <div class="col-sm-5 col-md-4">
                                                 <div id="datepickerDataFim" class="lg-aa-datepicker input-group date">
-                                                    <input id="txDatepickerDataFim" name="dataFim" type="text" class="lg-aa-control form-control" disabled>
+                                                    <input id="datepickerDataFim_Input" type="text" name="dataFim" class="lg-aa-control form-control">
                                                     <div class="lg-aa-datepicker__icon input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </div>
@@ -173,10 +199,10 @@
 
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label lg-aa-label col-md-4">Dada de pagamento</label>
-                                            <div class="col-md-4">
+                                            <label for="txtDatepickerDataPagamento" class="lg-aa-label control-label col-sm-5 col-md-4">Data de pagamento</label>
+                                            <div class="col-sm-5 col-md-4">
                                                 <div id="datepickerDataPagamento" class="lg-aa-datepicker input-group date">
-                                                    <input id="txDatepickerDataPagamento" name="dataPagamento" type="text" class="lg-aa-control form-control" disabled>
+                                                    <input id="txtDatepickerDataPagamento" type="text" name="dataPagamento" class="lg-aa-control form-control">
                                                     <div class="lg-aa-datepicker__icon input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </div>
@@ -189,13 +215,13 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label lg-aa-label lg-aa-label--edicao col-md-4">Abono pecuniário</label>
-                                            <div class="col-md-4">
+                                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Abono pecuniário</label>
+                                            <div class="col-sm-5 col-md-4">
                                                 <div id="switchAbonoPecuniario" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
-                                                    <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
                                                         <input id="confirmarAbonoPecuniario" type="radio" name="abonoPecuniario" value="true"> Sim
                                                     </label>
-                                                    <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
                                                         <input type="radio" name="abonoPecuniario" value="false" checked> Não
                                                     </label>
                                                 </div>
@@ -203,24 +229,24 @@
                                         </div>
                                     </div>
 
-                                    <div data-switch="confirmarAbonoPecuniario" class="row">
-                                        <div class="form-group lg-aa-obrigatorio">
-                                            <label for="diasAbono" class="control-label lg-aa-label lg-aa-label--edicao col-md-4">Dias de abono</label>
-                                            <div class="col-md-4">
-                                                <input type="number" id="diasAbono" name="diasAbono" class="form-control lg-aa-control">
+                                    <div data-switch="confirmarAbonoPecuniario" class="row" style="display:none">
+                                        <div class="form-group">
+                                            <label for="diasAbono" class="lg-aa-label lg-aa-label--obrigatorio control-label col-sm-5 col-md-4">Dias de abono</label>
+                                            <div class="col-sm-5 col-md-4">
+                                                <input id="diasAbono" type="number" name="diasAbono" required class="form-control lg-aa-control">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="form-group">
-                                            <label class="control-label lg-aa-label col-md-4">13º Salário</label>
-                                            <div class="col-md-4">
+                                            <label class="lg-aa-label control-label col-sm-5 col-md-4">13º Salário</label>
+                                            <div class="col-sm-5 col-md-4">
                                                 <div id="switchDecimoTerceiroSalario" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
-                                                    <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
                                                         <input type="radio" name="decimoTerceiroSalario" value="true"> Sim
                                                     </label>
-                                                    <label class="lg-aa-switch__item btn lg-aa-botao">
+                                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
                                                         <input type="radio" name="decimoTerceiroSalario" value="false" checked> Não
                                                     </label>
                                                 </div>
@@ -233,6 +259,7 @@
                     </div>
                 </fieldset>
 
+                <!-- 4ª Parte -->
                 <fieldset class="lg-aa-fieldset lg-aa-fieldset--primario">
                     <div class="container">
                         <legend>Lançamentos de Férias</legend>
@@ -242,17 +269,17 @@
                         <div class="lg-aa-container lg-aa-container--fieldset">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-sm-8 col-md-6">
+                                    <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
                                         <div id="switchTipoLancamento" class="btn-group btn-group-sm lg-aa-switch">
-                                            <label class="lg-aa-switch__item btn lg-aa-botao">
+                                            <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-4">
                                                 <input type="radio" name="tipoLancamento" value="0" checked> Histórico
                                                 <span class="badge pull-right">8</span>
                                             </label>
-                                            <label class="lg-aa-switch__item btn lg-aa-botao">
+                                            <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-4">
                                                 <input type="radio" name="tipoLancamento" value="1"> No mês
                                                 <span class="badge pull-right">1</span>
                                             </label>
-                                            <label class="lg-aa-switch__item btn lg-aa-botao">
+                                            <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-4">
                                                 <input type="radio" name="tipoLancamento" value="2"> Programadas
                                                 <span class="badge pull-right">3</span>
                                             </label>
@@ -275,7 +302,11 @@
                                                     <th class="text-center">13º salário</th>
                                                     <th class="text-center">Tipo</th>
                                                 </thead>
-                                                <tbody></tbody>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-center text-muted" colspan="9">Nenhum lançamento identificado</td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -285,25 +316,27 @@
                     </div>
                 </fieldset>
 
+                <!-- 5ª Parte -->
                 <div class="container">
                     <div class="col-xs-6 col-sm-3 col-sm-push-6 col-md-2 col-md-push-8">
                         <button type="button" class="btn btn-block lg-aa-botao lg-aa-botao--secundario">Cancelar</button>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-sm-push-6 col-md-2 col-md-push-8">
-                        <button type="submit" class="btn btn-block lg-aa-botao lg-aa-botao--secundario">Confirmar</button>
+                        <button type="submit" class="btn btn-block lg-aa-botao lg-aa-botao--primario-ativo">Confirmar</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <br>
-    <script>
-        require(['aaControls/lg.aa.config'], function(config) {
+
+    <script type="text/javascript">
+        require(['aaControls/lg.aa.config'], function (config) {
             config.adicionar('workflow', './assets/scripts');
 
-            require(['jquery', 'workflow/lg.ferias.controller'], function($, FeriasController) {
-                new FeriasController($('#pnlFerias'));
-            }); 
+            require(['jquery', 'workflow/lg.ferias.controller'], function ($, FeriasController) {
+                var controller = new FeriasController($('#pnlFerias'));
+            });
         });
     </script>
 </body>
