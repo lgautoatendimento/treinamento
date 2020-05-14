@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Férias</title>
+
+    <!-- Estilos da página [Versão de Produção] -->
+    <link rel="stylesheet" href="https://cdn1.lg.com.br/autoatendimento/1.0.0/css/lg.build.min.css">
+
+    <script>
+        var require = {
+            baseUrl: '/',
+            waitSeconds: 30,
+            paths: {
+                'cdn': 'https://cdn1.lg.com.br',
+                'text': 'https://cdn1.lg.com.br/require-text/2.0.15/js/text',
+                'config': 'https://cdn1.lg.com.br/requirejs-config/0.0.1/js/config',
+                'aaControls': 'https://cdn1.lg.com.br/autoatendimento/1.0.0/js/dist',
+                'bootstrap_v3.4.1': 'https://cdn1.lg.com.br/bootstrap/3.4.1/js/bootstrap.min',
+                'jquery.validator': 'https://cdn1.lg.com.br/jquery-validation/1.17.0/js/jquery.validate.min',
+                'jquery-mousewheel': 'https://cdn1.lg.com.br/jquery-mousewheel/3.1.13/js/jquery.mousewheel.min',
+                'moment': 'https://cdn1.lg.com.br/moment/2.18.1/js/moment-with-locales.min',
+                'knockout': 'https://cdn1.lg.com.br/knockout/3.4.2/js/knockout.min',
+                'knockout.mapping': 'https://cdn1.lg.com.br/knockout-mapping/2.4.1/js/knockout.mapping.min',
+                'treinamento': './'
+            },
+            map: {
+                '*': {
+                    'jquery': 'aaControls/jquery/3.4.1',
+                    'bootstrap': 'bootstrap_v3.4.1',
+                    'css': 'cdn/require-css/0.1.10/js/css.min',
+                    'image': 'cdn/autoatendimento/1.0.0/js/requirejs/lg.aa.imageLoader'
+                }
+            },
+            shim: {
+                '*': {
+                    deps: ['jquery', 'bootstrap_v3.4.1']
+                },
+                'bootstrap_v3.4.1': {
+                    deps: [
+                        'jquery'
+                    ]
+                }
+            },
+            deps: ['jquery', 'bootstrap_v3.4.1']
+        };
+    </script>
+
+    <script src="https://cdn1.lg.com.br/require/2.3.5/js/require.js"></script>
+</head>
+
+<body>
+    <div id="meuConteudo">
+        <div id="header"></div>
+        <div id="toolbar"></div>
+
+        <form class="form-horizontal">
+            <fieldset class="lg-aa-fieldset lg-aa-fieldset--primario">
+                <div class="container">
+                    <legend>Informações</legend>
+                </div>
+            </fieldset>
+
+            <div class="lg-aa-container lg-aa-container--fieldset">
+                <div class="container">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Período de aquisição</label>
+                            <div class="col-sm-7 col-md-8">10/10/2011 a 09/10/2012 - 30 dias de direito</div>
+                        </div>
+
+                        <div class="row">
+                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Faltas justificadas</label>
+                            <div class="col-sm-7 col-md-8">0 dias</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Período de fruição</label>
+                            <div class="col-sm-7 col-md-8">10/10/2012 a 09/10/2013</div>
+                        </div>
+
+                        <div class="row">
+                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Saldo de férias</label>
+                            <div class="col-sm-7 col-md-8">30 dias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset class="lg-aa-fieldset lg-aa-fieldset--primario">
+                <div class="container">
+                    <dl class="lg-aa-container__erro"></dl>
+                    <legend>Parcelamento de férias</legend>
+                </div>
+            </fieldset>
+
+            <div class="lg-aa-container lg-aa-container--fieldset">
+                <div class="container">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="lg-aa-label control-label col-sm-5 col-md-4">Férias parceladas?</label>
+                            <div class="col-sm-7 col-md-8">
+                                <div id="switchFeriasParceladas" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
+                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
+                                        <input type="radio" name="feriasParceladas" value="true"> Sim
+                                    </label>
+                                    <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
+                                        <input type="radio" name="feriasParceladas" value="false" checked> Não
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="lg-aa-separador">
+                        <h4 class="lg-aa-titulo">Dados da ocorrência de férias</h4>
+                        <hr>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group lg-aa-obrigatorio">
+                                <label for="dataInicio_Input" class="lg-aa-label control-label lg-aa-label--edicao col-sm-5 col-md-4">Data de início</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <div id="datepickerDataInicio" class="lg-aa-datepicker input-group date">
+                                        <input id="dataInicio_Input" type="text" name="dataInicio" class="lg-aa-control form-control">
+                                        <div class="lg-aa-datepicker__icon input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group lg-aa-obrigatorio">
+                                <label for="diasGozo" class="lg-aa-label control-label lg-aa-label--edicao col-sm-5 col-md-4">Dias de gozo</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <input id="diasGozo" type="number" name="diasGozo" class="form-control lg-aa-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="datepickerDataFim_Input" class="lg-aa-label control-label col-sm-5 col-md-4">Data fim</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <div id="datepickerDataFim" class="lg-aa-datepicker input-group date">
+                                        <input id="datepickerDataFim_Input" type="text" name="dataFim" class="lg-aa-control form-control">
+                                        <div class="lg-aa-datepicker__icon input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="txtDatepickerDataPagamento" class="lg-aa-label control-label col-sm-5 col-md-4">Data de pagamento</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <div id="datepickerDataPagamento" class="lg-aa-datepicker input-group date">
+                                        <input id="txtDatepickerDataPagamento" type="text" name="dataPagamento" class="lg-aa-control form-control">
+                                        <div class="lg-aa-datepicker__icon input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="lg-aa-label control-label col-sm-5 col-md-4">Abono pecuniário</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <div id="switchAbonoPecuniario" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
+                                        <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
+                                            <input id="confirmarAbonoPecuniario" type="radio" name="abonoPecuniario" value="true"> Sim
+                                        </label>
+                                        <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
+                                            <input type="radio" name="abonoPecuniario" value="false" checked> Não
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-switch="confirmarAbonoPecuniario" class="row" style="display:none">
+                            <div class="form-group">
+                                <label for="diasAbono" class="lg-aa-label lg-aa-label--obrigatorio control-label col-sm-5 col-md-4">Dias de abono</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <input id="diasAbono" type="number" name="diasAbono" required class="form-control lg-aa-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="lg-aa-label control-label col-sm-5 col-md-4">13º Salário</label>
+                                <div class="col-sm-5 col-md-4">
+                                    <div id="switchDecimoTerceiroSalario" class="btn-group btn-group-sm lg-aa-switch lg-aa-switch__padrao">
+                                        <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--secundario col-xs-5">
+                                            <input type="radio" name="decimoTerceiroSalario" value="true"> Sim
+                                        </label>
+                                        <label class="lg-aa-switch__item btn lg-aa-botao lg-aa-botao--primario-ativo active col-xs-7">
+                                            <input type="radio" name="decimoTerceiroSalario" value="false" checked> Não
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        require(['jquery', 'treinamento/modulo1'], function ($, Controller) {
+            var c1 = new Controller($('#meuConteudo'))
+        })
+    </script>
+</body>
+
+</html>
